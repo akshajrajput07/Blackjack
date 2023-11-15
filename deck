@@ -1,0 +1,38 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package project;
+
+/**
+ *
+ * @author hp
+ */
+import java.util.*;
+
+public class Deck {
+    private List<Card> cards;
+    
+    public Deck() {
+        cards = new ArrayList<>();
+        String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
+        for (String suit : suits) {
+            for (int value = 1; value <= 10; value++) {
+                cards.add(new Card(suit, value));
+            }
+        }
+    }
+    
+    public void shuffle() {
+        Collections.shuffle(cards);
+    }
+    
+    public Card dealCard() {
+        if (cards.isEmpty()) {
+            return null;
+        } else {
+            return cards.remove(0);
+        }
+    }
+}
+
