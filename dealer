@@ -1,0 +1,66 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package project;
+
+/**
+ *
+ * @author hp
+ */
+import java.util.*;
+
+public class Dealer {
+    private List<Card> hand;
+
+    public Dealer() {
+        hand = new ArrayList<>();
+    }
+
+    public void addCard(Card card) {
+        hand.add(card);
+    }
+
+    public void revealFirstCard() {
+        System.out.println("Dealer's card: " + hand.get(0).getValue() + " of " + hand.get(0).getSuit());
+    }
+
+    public boolean shouldHit() {
+        int total = getHandTotal();
+        if (total < 17) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int getHandTotal() {
+        int total = 0;
+        int aces = 0;
+        for (Card card : hand) {
+            if (card.getValue() == 1) {
+                aces++;
+            } else if (card.getValue() >= 10) {
+                total += 10;
+            } else {
+                total += card.getValue();
+            }
+        }
+        for (int i = 0; i < aces; i++) {
+            if (total + 11 <= 21) {
+                total += 11;
+            } else {
+                total += 1;
+            }
+        }
+        return total;
+    }
+
+    public List<Card> getHand() {
+        return hand;
+    }
+
+    public void clearHand() {
+        hand.clear();
+    }
+}
