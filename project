@@ -1,0 +1,69 @@
+package project;
+import java.util.*;
+
+public class PROJECT {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Deck deck = new Deck();
+        deck.shuffle();
+        Player player = new Player();
+        Dealer dealer = new Dealer();
+
+        // Deal first two cards to player and dealer
+        player.addCard(deck.dealCard());
+        dealer.addCard(deck.dealCard());
+        player.addCard(deck.dealCard());
+        dealer.addCard(deck.dealCard());
+
+        // Show initial hands
+        System.out.println("Your Total: " +  player.getHandTotal());
+        dealer.revealFirstCard();
+
+        // Player's turn
+        while (player.getHandTotal() < 21) {
+            System.out.println("Do you want to hit? (y/n)");
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("y")) {
+                player.addCard(deck.dealCard());
+                System.out.println("Your Total: " + player.getHandTotal());
+            } else {
+                break;
+            }
+        }
+
+        // Dealer's turn
+        while (dealer.shouldHit()) {
+            dealer.addCard(deck.dealCard());
+        }
+
+        // Determine winner
+        int playerTotal = player.getHandTotal();
+        int dealerTotal = dealer.getHandTotal();
+        System.out.println("Dealer's Total: " + dealer.getHandTotal());
+        if (playerTotal > 21) {
+            System.out.println("Bust! You lose.");
+        } else if (dealerTotal > 21) {
+            System.out.println("Dealer busts! You win.");
+        } else if (playerTotal > dealerTotal) {
+            System.out.println("You win!");
+        } else if (dealerTotal > playerTotal) {
+            System.out.println("You lose.");
+        } else {
+            System.out.println("It's a tie.");
+        }
+
+        // Clear hands
+        player.clearHand();
+        dealer.clearHand();
+
+        // Play again?
+        System.out.println("Do you want to play again? (y/n)");
+        String input = scanner.nextLine();
+        if (input.equalsIgnoreCase("y")) {
+            main(args);
+        } else {
+            System.out.println("Thanks for playing!");
+        }
+    }
+}
+
